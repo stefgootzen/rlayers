@@ -8,11 +8,14 @@ import {ProjectionLike} from 'ol/proj';
 import {RContext, RContextType} from '../context';
 import {RlayersBase} from '../REvent';
 import debug from '../debug';
+import {Extent} from 'ol/extent';
 
 /**
  * @propsfor RLayerProps
  */
 export interface RLayerProps extends PropsWithChildren<unknown> {
+    /** Extent within layer rendering is restricted */
+    extent?: Extent;
     /** State of the layer */
     visible?: boolean;
     /** Opacity when blending */
@@ -57,6 +60,7 @@ export default class RLayer<P extends RLayerProps> extends RlayersBase<P, Record
     protected refresh(prevProps?: P): void {
         super.refresh(prevProps);
         for (const p of [
+            'extent',
             'visible',
             'opacity',
             'zIndex',
